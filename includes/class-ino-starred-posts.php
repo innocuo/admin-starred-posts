@@ -193,12 +193,17 @@ class Ino_Starred_Posts {
       }
     }
 
-    $star_info = Ino_Starred_Stars::get_star_by_id( $star );
-    $star_label = ( $star_info == null )? '' : $star_info['label'];
-
     update_post_meta($post_id, $field_name, $star);
 
-    echo json_encode( array( 'val' => $star, 'label' => $star_label ) );
+    $star_info = Ino_Starred_Stars::get_star_by_id( $star );
+
+    $response = array(
+      'val' => $star,
+      'label' => ( $star_info == null )? '' : $star_info['label'],
+      'ids' => $ids
+    );
+
+    echo json_encode( $response );
     exit;
   }
 
