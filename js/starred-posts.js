@@ -8,7 +8,7 @@
 
     var idx = $.inArray( star_id, stars_ids);
     var new_idx, new_star_id, tmp_idx;
-console.log(steps, star_id, stars_ids);
+    
     if(idx >= 0){
 
       tmp_idx = ( idx + steps ) % ( stars_ids.length + 1 );
