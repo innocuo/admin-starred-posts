@@ -1,12 +1,12 @@
 === Admin Starred Posts ===
 Contributors: innocuo
-Tags: bookmarks, admin, stars, highlight, posts, gmail, productivity
+Tags: bookmarks, admin, stars, organize, posts, gmail, productivity
 Requires at least: 3.8
 Tested up to: 4.7
 Stable tag: 2.0.0
 License: GPLv2
 
-Mark posts, pages and custom posts in your Wordpress admin; pretty similar to how stars in Gmail work.
+Mark posts, pages and custom posts in your Wordpress admin; pretty similar to the stars feature in Gmail.
 
 == Description ==
 Admin Starred Posts lets you mark posts, pages and custom posts within the Wordpress admin with stars.
