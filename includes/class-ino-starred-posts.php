@@ -140,7 +140,7 @@ class Ino_Starred_Posts {
       case 'ino_starred_posts':
         $this->set_options();
 
-        $item_template = '<a href="#" class="ino-star-clickable ino-star c%d" data-post_id="%d" tabindex="-1" title="%s">*</a>';
+        $item_template = '<a href="#" class="ino-star-clickable ino-star c%1$d" data-star_id="%1$d" data-post_id="%2$d" tabindex="-1" title="%3$s">*</a>';
         $field_name    = $this->get_field_name();
 
         $star = get_post_meta( $post_id, $field_name, true );
