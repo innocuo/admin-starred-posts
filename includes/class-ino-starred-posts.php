@@ -123,9 +123,12 @@ class Ino_Starred_Posts {
       //insert column on the left side, so it is easy to see and interact with
       $insert_at = 1;
 
+      $this->set_options();
+      $ids_str = ( isset( $this->options['enabled_stars'] ) && !empty( $this->options['enabled_stars'] ) ) ? $this->options['enabled_stars'] : '1';
+
       $columns = array_merge(
         array_slice( $columns, 0, $insert_at, true ),
-        array( 'ino_starred_posts' => '<span class="ino-starred-column-header">Stars</span>' ),
+        array( 'ino_starred_posts' => '<span class="ino-starred-column-header" data-stars_ids="'.$ids_str.'">Stars</span>' ),
         array_slice( $columns, $insert_at, null, true )
       );
     }

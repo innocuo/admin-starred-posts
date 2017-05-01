@@ -39,6 +39,13 @@ console.log(steps, star_id, stars_ids);
 
 
   $( function(){
+    var $header = $('.ino-starred-column-header');
+    if( $header.length > 0 ){
+      var ids = $header.data('stars_ids');
+      if( ids.length > 0){
+        stars_ids = ids.split(',');
+      }
+    }
 
     $( '.ino-star-clickable' ).click( function( e ){
 
