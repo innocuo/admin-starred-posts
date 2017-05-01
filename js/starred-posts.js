@@ -8,7 +8,7 @@
 
     var idx = $.inArray( star_id, stars_ids);
     var new_idx, new_star_id, tmp_idx;
-
+console.log(steps, star_id, stars_ids);
     if(idx >= 0){
 
       tmp_idx = ( idx + steps ) % ( stars_ids.length + 1 );
@@ -69,7 +69,9 @@
         ajaxurl,
         {
           'action'   : 'ino_set_star',
-          'post_id': post_id
+          'post_id': post_id,
+          'steps': star_queue[ queue_id ].steps,
+          'star_id': star_id
         },
         function( result ){
 

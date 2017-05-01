@@ -163,8 +163,10 @@ class Ino_Starred_Posts {
 
     $this->set_options();
 
-    $post_id       = $_POST['post_id'];
-    $ids           = $this->get_ids_list();
+    $post_id  = $_POST['post_id'];
+    $star  = $_POST['star_id'];
+    $steps  = $_POST['steps'] *1;
+    $ids      = $this->get_ids_list();
 
     //if no available stars, just return the default 'off' value
     if( count( $ids ) <= 0 ){
@@ -174,33 +176,73 @@ class Ino_Starred_Posts {
 
     $field_name = $this->get_field_name();
 
-    $star = get_post_meta( $post_id, $field_name, true );
+    //$star = get_post_meta( $post_id, $field_name, true );
 
-    if( empty( $star ) || $star === 0 ){
-      $star = $ids[0];
+    //if( empty( $star ) || $star === 0 ){
+    //  $star = $ids[0];
+    //}else{
+
+
+    /*var idx = $.inArray( star_id, stars_ids);
+    var new_idx, new_star_id, tmp_idx;
+
+    if(idx >= 0){
+
+      tmp_idx = ( idx + steps ) % ( stars_ids.length + 1 );
+      new_idx = ( tmp_idx >= stars_ids.length )? -1 : tmp_idx;
+
+    }else if( star_id == 0){
+
+      tmp_idx = ( -1 + steps ) % ( stars_ids.length + 1 );
+      new_idx = ( tmp_idx >= stars_ids.length )? -1 : tmp_idx;
+
     }else{
-      $idx = array_search( $star, $ids );
 
-      //if current value is the last on the list, go back to 'off'
-      if( $idx == count($ids)-1 ){
-        $star = 0;
-      //else if the value is not on the list, set to the first available
-      }else if($idx === false ){
-        $star = $ids[0];
-      //just set the next value on the list
-      }else{
-        $star = $ids[$idx+1];
-      }
+      new_idx = 0;
+
     }
 
-    update_post_meta($post_id, $field_name, $star);
+    new_star_id = ( new_idx >= 0 )? stars_ids[ new_idx ] : 0;
 
-    $star_info = Ino_Starred_Stars::get_star_by_id( $star );
+    link
+      .attr('title', label)
+      .attr( 'class', 'ino-star c' + new_star_id );
+
+    if( steps == 0){
+      link.data( 'star_id', new_star_id );
+    }*/
+
+      $idx = array_search( $star, $ids );
+$tmp_idx = -33;
+      if( $idx !== false && $idx >= 0 ){
+$ss = 1;
+        $tmp_idx = ( $idx + $steps ) % ( count($ids) + 1 );
+        $new_idx = ( $tmp_idx >= count($ids) )? -1 : $tmp_idx;
+
+      }else if($star == "0" ){
+$ss = 2;
+        $tmp_idx = ( -1 + $steps ) % ( count($ids) + 1 );
+        $new_idx = ( $tmp_idx >= count($ids) )? -1 : $tmp_idx;
+
+      }else{
+$ss = 3;
+        $new_idx = 0;
+
+      }
+
+      $new_star_id = ( $new_idx >= 0 )? $ids[ $new_idx ] : 0;
+    //}
+
+    update_post_meta($post_id, $field_name, $new_star_id);
+
+    $star_info = Ino_Starred_Stars::get_star_by_id( $new_star_id );
 
     $response = array(
-      'val' => $star,
+      'val' => $new_star_id,
       'label' => ( $star_info == null )? '' : $star_info['label'],
-      'ids' => $ids
+      'ids' => $ids,
+      'xxx' => $idx,
+      'ss' => $ss
     );
 
     echo json_encode( $response );
