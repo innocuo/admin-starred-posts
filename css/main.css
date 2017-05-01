@@ -56,6 +56,16 @@
   background-position: center middle;
 }
 
+@media screen and ( max-width: 782px ) {
+  th.column-ino_starred_posts,
+  .wp-list-table tr:not(.inline-edit-row):not(.no-items) td.column-ino_starred_posts {
+    display: none;
+  }
+  .wp-list-table tr:not(.inline-edit-row):not(.no-items) td.column-ino_starred_posts::before{
+    content: none;
+  }
+}
+
 
 /* == SETTINGS ==*/
 
