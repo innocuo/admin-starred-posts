@@ -33,9 +33,8 @@
       .attr('title', label)
       .removeClass('c' + star_id)
       .addClass( 'c' + new_star_id );
-console.log(steps);
+
     if( steps == 0){
-      console.log('updating star id to ', new_star_id)
       link.data( 'star_id', new_star_id );
     }
 
