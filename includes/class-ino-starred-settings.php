@@ -83,8 +83,8 @@ class Ino_Starred_Settings
       <div class="wrap">
         <h2>Starred Posts - Settings</h2>
 
-        <p>Use stars to mark posts, pages and custom posts in your Wordpress admin. Mark a post with a star so you
-          remember it's important, or just because you want to highlight it.</p>
+        <p>Use stars to mark posts, pages and custom posts in your Wordpress admin.<br>Mark a post with a star so you
+          remember it's important, to highlight or bookmark it.</p>
 
         <form method="post" action="options.php">
         <?php
@@ -144,8 +144,9 @@ class Ino_Starred_Settings
         }
       }
       ?>
-      <strong>Drag the stars between the lists.</strong>  The stars will rotate in the order shown below when you click successively.<br>
-      To learn the name of a star, hover your mouse over the image.
+      <strong>Drag the stars between the lists.</strong><br>
+      <i>The stars will rotate in the order shown below when you click successively.</i><br>
+      Hover your mouse over each star to show its name.
       <div class="ino-stars-row">
         <div class="ino-stars-list-label">In Use</div>
         <div class="ino-stars-enabled ino-stars-connected">
@@ -185,7 +186,7 @@ class Ino_Starred_Settings
       ?>
       <p>Select the post types where you'd like Starred Posts to be enabled.
       <?php
-      echo '<h4>WP Post types</h4>';
+      echo '<h4>Default Post types</h4>';
       echo '<ul class="ino-star-builtin-pt">';
       foreach( $builtin as $pt_id=>$pt ){
         $checked = ( in_array( $pt_id, $option_pts ) )? 'checked' : '';
@@ -196,10 +197,14 @@ class Ino_Starred_Settings
 
       echo '<h4>Custom Post types</h4>';
       echo '<ul class="ino-star-custtom-pt">';
-      foreach( $pts as $pt_id=>$pt ){
-        $checked = ( in_array( $pt_id, $option_pts ) ) ? 'checked' : '';
-        $item    = sprintf( $item_template, $pt_id, $checked, $pt->labels->name );
-        echo $item;
+      if( count($pts) > 0 ){
+        foreach( $pts as $pt_id=>$pt ){
+          $checked = ( in_array( $pt_id, $option_pts ) ) ? 'checked' : '';
+          $item    = sprintf( $item_template, $pt_id, $checked, $pt->labels->name );
+          echo $item;
+        }
+      }else{
+        echo '<li>No <a href="https://codex.wordpress.org/Post_Types#Custom_Post_Types" target="_blank">custom post types</a> available</li>';
       }
       echo '</ul>';
     }
