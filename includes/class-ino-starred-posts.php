@@ -123,9 +123,12 @@ class Ino_Starred_Posts {
       //insert column on the left side, so it is easy to see and interact with
       $insert_at = 1;
 
+      $this->set_options();
+      $ids_str = ( isset( $this->options['enabled_stars'] ) && !empty( $this->options['enabled_stars'] ) ) ? $this->options['enabled_stars'] : '1';
+
       $columns = array_merge(
         array_slice( $columns, 0, $insert_at, true ),
-        array( 'ino_starred_posts' => '<span class="ino-starred-column-header">Stars</span>' ),
+        array( 'ino_starred_posts' => '<span class="ino-starred-column-header" data-stars_ids="'.$ids_str.'">Stars</span>' ),
         array_slice( $columns, $insert_at, null, true )
       );
     }
@@ -140,7 +143,7 @@ class Ino_Starred_Posts {
       case 'ino_starred_posts':
         $this->set_options();
 
-        $item_template = '<a href="#" class="ino-star-clickable ino-star c%d" data-post_id="%d" tabindex="-1" title="%s">*</a>';
+        $item_template = '<a href="#" class="ino-star-clickable ino-star c%1$d" data-star_id="%1$d" data-post_id="%2$d" tabindex="-1" title="%3$s">*</a>';
         $field_name    = $this->get_field_name();
 
         $star = get_post_meta( $post_id, $field_name, true );
@@ -163,8 +166,10 @@ class Ino_Starred_Posts {
 
     $this->set_options();
 
-    $post_id       = $_POST['post_id'];
-    $ids           = $this->get_ids_list();
+    $post_id  = $_POST['post_id'];
+    $star  = $_POST['star_id'];
+    $steps  = $_POST['steps'] *1;
+    $ids      = $this->get_ids_list();
 
     //if no available stars, just return the default 'off' value
     if( count( $ids ) <= 0 ){
@@ -174,31 +179,39 @@ class Ino_Starred_Posts {
 
     $field_name = $this->get_field_name();
 
-    $star = get_post_meta( $post_id, $field_name, true );
+    //$star = get_post_meta( $post_id, $field_name, true );
 
-    if( empty( $star ) || $star === 0 ){
-      $star = $ids[0];
+    $idx = array_search( $star, $ids );
+
+    if( $idx !== false && $idx >= 0 ){
+
+      $tmp_idx = ( $idx + $steps ) % ( count($ids) + 1 );
+      $new_idx = ( $tmp_idx >= count($ids) )? -1 : $tmp_idx;
+
+    }else if($star == "0" ){
+
+      $tmp_idx = ( -1 + $steps ) % ( count($ids) + 1 );
+      $new_idx = ( $tmp_idx >= count($ids) )? -1 : $tmp_idx;
+
     }else{
-      $idx = array_search( $star, $ids );
 
-      //if current value is the last on the list, go back to 'off'
-      if( $idx == count($ids)-1 ){
-        $star = 0;
-      //else if the value is not on the list, set to the first available
-      }else if($idx === false ){
-        $star = $ids[0];
-      //just set the next value on the list
-      }else{
-        $star = $ids[$idx+1];
-      }
+      $new_idx = 0;
+
     }
 
-    $star_info = Ino_Starred_Stars::get_star_by_id( $star );
-    $star_label = ( $star_info == null )? '' : $star_info['label'];
+    $new_star_id = ( $new_idx >= 0 )? $ids[ $new_idx ] : 0;
 
-    update_post_meta($post_id, $field_name, $star);
+    update_post_meta($post_id, $field_name, $new_star_id);
 
-    echo json_encode( array( 'val' => $star, 'label' => $star_label ) );
+    $star_info = Ino_Starred_Stars::get_star_by_id( $new_star_id );
+
+    $response = array(
+      'val' => $new_star_id,
+      'label' => ( $star_info == null )? '' : $star_info['label'],
+      'ids' => $ids
+    );
+
+    echo json_encode( $response );
     exit;
   }
 
