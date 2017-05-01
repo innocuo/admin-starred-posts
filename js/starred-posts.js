@@ -54,7 +54,7 @@ console.log(steps, star_id, stars_ids);
           post_id = $link.data( 'post_id' ),
           star_id = $link.data( 'star_id' ) + '';
 
-      $link.css('opacity', 0.7);
+      $link.css('opacity', 0.5);
 
       var queue_id = 'post_' + post_id;
 
