@@ -56,6 +56,26 @@
   background-position: center middle;
 }
 
+.row-actions a.ino-star{
+  vertical-align: bottom;
+}
+.row-actions .ino_star{
+  display:none;
+}
+
+@media screen and ( max-width: 782px ) {
+  th.column-ino_starred_posts,
+  .wp-list-table tr:not(.inline-edit-row):not(.no-items) td.column-ino_starred_posts {
+    display: none!important;
+  }
+  .wp-list-table tr:not(.inline-edit-row):not(.no-items) td.column-ino_starred_posts::before{
+    content: none;
+  }
+  .row-actions .ino_star{
+    display: inline;
+  }
+}
+
 
 /* == SETTINGS ==*/
 

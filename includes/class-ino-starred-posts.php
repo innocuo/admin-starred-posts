@@ -83,8 +83,11 @@ class Ino_Starred_Posts {
 
       if( $post_type == 'page' || is_post_type_hierarchical( $post_type ) ){
         add_action( 'manage_pages_custom_column' , array( $this, 'display_admin_column' ), 10, 2 );
+        add_filter( 'page_row_actions', array( $this, 'add_quick_actions'), 10, 2 );
+
       }else{
         add_action( 'manage_'.$post_type.'_posts_custom_column', array( $this, 'display_admin_column' ), 10, 2 );
+        add_filter( 'post_row_actions', array( $this, 'add_quick_actions'), 10, 2 );
       }
 
       add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -143,7 +146,7 @@ class Ino_Starred_Posts {
       case 'ino_starred_posts':
         $this->set_options();
 
-        $item_template = '<a href="#" class="ino-star-clickable ino-star c%1$d" data-star_id="%1$d" data-post_id="%2$d" tabindex="-1" title="%3$s">*</a>';
+        $item_template = '<a href="#" class="ino-star-clickable ino-star c%1$d ino-star-postid-%2$d" data-star_id="%1$d" data-post_id="%2$d" tabindex="-1" title="%3$s">*</a>';
         $field_name    = $this->get_field_name();
 
         $star = get_post_meta( $post_id, $field_name, true );
@@ -158,6 +161,29 @@ class Ino_Starred_Posts {
         printf($item_template, $star, $post_id, $star_label);
       break;
     }
+  }
+
+
+  function add_quick_actions( $actions, $post ){
+
+    $this->set_options();
+
+    $item_template = '<a href="#" class="ino-star-clickable ino-star c%1$d ino-star-postid-%2$d" data-star_id="%1$d" data-post_id="%2$d" tabindex="-1" title="%3$s">*</a>';
+    $field_name    = $this->get_field_name();
+
+    $star = get_post_meta( $post->ID, $field_name, true );
+    if( empty( $star ) ){
+      $star = 0;
+      $star_label = '';
+    }else{
+      $star_info  = Ino_Starred_Stars::get_star_by_id( $star );
+      $star_label = ( $star_info == null )? 'star ' . $star : $star_info['label'];
+      $star_label = 'starred with \'' . $star_label . '\'';
+    }
+
+    $actions = array_merge( array('ino_star'=> sprintf($item_template, $star, $post->ID, $star_label) ), $actions );
+
+    return $actions;
   }
 
 

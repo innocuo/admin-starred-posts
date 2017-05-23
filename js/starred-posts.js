@@ -2,13 +2,15 @@
   var stars_ids = [];
   var star_queue = {};
 
-  function ino_set_star( link, label, post_id, star_id, steps){
+  function ino_set_star( label, post_id, star_id, steps){
 
     if( stars_ids.length <= 0 ) return;
 
+    var link = $('a.ino-star-postid-' + post_id);
+
     var idx = $.inArray( star_id, stars_ids);
     var new_idx, new_star_id, tmp_idx;
-    
+
     if(idx >= 0){
 
       tmp_idx = ( idx + steps ) % ( stars_ids.length + 1 );
@@ -29,7 +31,8 @@
 
     link
       .attr('title', label)
-      .attr( 'class', 'ino-star c' + new_star_id );
+      .removeClass('c' + star_id)
+      .addClass( 'c' + new_star_id );
 
     if( steps == 0){
       link.data( 'star_id', new_star_id );
@@ -75,7 +78,7 @@
         };
       }
 
-      ino_set_star( $link, '', post_id, star_id,  star_queue[ queue_id ].steps );
+      ino_set_star( '', post_id, star_id,  star_queue[ queue_id ].steps );
 
       star_queue[ queue_id ].post = $.post(
         ajaxurl,
@@ -92,7 +95,7 @@
           if( typeof result.val !== 'undefined' ){
             stars_ids = result.ids;
             var result_label = ( result.label )? 'starred with \'' + result.label + '\'' : '';
-            ino_set_star( $link, result_label, post_id, result.val,  0 );
+            ino_set_star( result_label, post_id, result.val,  0 );
           }
 
           $link.css('opacity', 0.99);;
