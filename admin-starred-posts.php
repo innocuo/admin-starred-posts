@@ -1,18 +1,18 @@
 <?php
 /**
- * Plugin Name:       Admin Starred Posts
- * Version:           2.1.0
- * Description: 			This plugin allows the administrators/editors/authors to mark posts with different star styles
- * Author: 						Luis Orozco
- * Author URI: 				http://innocuo.com
- * License: 					GPL2
+ * Plugin Name: Admin Starred Posts
+ * Version: 2.3.0
+ * Description: Stars everywhere! This plugin lets administrators/editors/authors bookmark posts,pages and custom posts with different star styles
+ * Author: Luis Orozco
+ * Author URI: http://innocuo.com
+ * License: GPL2
  */
 
 // If this file is called directly, abort.
 defined( 'ABSPATH' ) or die( '' );
 
 if(!defined('INO_STARRED_POSTS_VERSION')){
-	define('INO_STARRED_POSTS_VERSION', '2.2.0');
+	define('INO_STARRED_POSTS_VERSION', '2.3.0');
 }
 
 //required classes
