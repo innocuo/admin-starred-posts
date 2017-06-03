@@ -12,7 +12,7 @@
 defined( 'ABSPATH' ) or die( '' );
 
 if(!defined('INO_STARRED_POSTS_VERSION')){
-	define('INO_STARRED_POSTS_VERSION', '2.0.0');
+	define('INO_STARRED_POSTS_VERSION', '2.2.0');
 }
 
 //required classes
