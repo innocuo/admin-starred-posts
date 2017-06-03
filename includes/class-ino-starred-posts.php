@@ -221,7 +221,7 @@ class Ino_Starred_Posts {
 
     }else{
 
-      $new_idx = 0;
+      $new_idx = -1;
 
     }
 
@@ -233,7 +233,7 @@ class Ino_Starred_Posts {
 
     $response = array(
       'val' => $new_star_id,
-      'label' => ( $star_info == null )? '' : $star_info['label'],
+      'label' => ( $star_info == null || $new_idx == -1)? '' : $star_info['label'],
       'ids' => $ids
     );
 
