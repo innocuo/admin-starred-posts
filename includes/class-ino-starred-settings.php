@@ -83,8 +83,8 @@ class Ino_Starred_Settings
       <div class="wrap">
         <h2>Starred Posts - Settings</h2>
 
-        <p>Use stars to mark posts, pages and custom posts in your Wordpress admin.<br>Mark a post with a star so you
-          remember it's important, to highlight or bookmark it.</p>
+        <p>Use stars to mark posts, pages and custom posts in your WordPress admin.<br>
+          Mark a post with a star to highlight or bookmark it, or so you remember it's important.</p>
 
         <form method="post" action="options.php">
         <?php
@@ -93,7 +93,7 @@ class Ino_Starred_Settings
           submit_button();
           ?>
         </form>
-        <div class="ino-starred-settings-footer">Thank you for using the Admin Starred Posts plugin. v<?php echo INO_STARRED_POSTS_VERSION; ?></div>
+        <div class="ino-starred-settings-footer">Thank you for using this plugin!<br>Admin Starred Posts plugin. v<?php echo INO_STARRED_POSTS_VERSION; ?></div>
       </div>
       <?php
     }
@@ -155,7 +155,7 @@ class Ino_Starred_Settings
         </div>
       </div>
       <div class="ino-stars-row">
-        <div class="ino-stars-list-label">Not In Use</div>
+        <div class="ino-stars-list-label ino-stars-list-label-not-used">Not In Use</div>
         <div class="ino-stars-disabled ino-stars-connected">
           <?php echo implode( "\n", $disabled ); ?>
         </div>
